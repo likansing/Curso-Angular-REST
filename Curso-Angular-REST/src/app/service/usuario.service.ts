@@ -21,6 +21,27 @@ export class UsuarioService {
 
   //  http://localhost:8080/cursospringrestapi/usuario/usuarioporNome/nome
   consultarUser(nome: String): Observable<any> {
-    return this.http.get(AppConstants.baseUrl + "usuarioPorNome/" + nome);
+    return this.http.get(AppConstants.baseUrl + 'usuarioPorNome/' + nome);
   }
+
+  getStudent(id): Observable<any> {
+    return this.http.get<any>(AppConstants.baseUrl + id);
+  }
+
+  salvarUsuario(user): Observable<any> {
+    return this.http.post<any>(AppConstants.baseUrl, user);
+  }
+
+  updateUsuario(user): Observable<any> {
+    return this.http.put<any>(AppConstants.baseUrl, user);
+  }
+
+  userAutenticado() {
+    if (localStorage.getItem('token') != null && localStorage.getItem('token').toString().trim() != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

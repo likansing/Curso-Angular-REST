@@ -6,6 +6,7 @@
             placeholder="Pesquisa por nome">
     </div>
     <button type="button" class="btn btn-primary mb-2" (click)="consultarUser()">Buscar</button>
+    <button type="button" [routerLink]="['/usuarioAdd']" routerLinkActive="router-link-active" style="margin-left: 5px;"  class="btn btn-success mb-2">Novo</button>
 </form>
 
 <br />
@@ -15,6 +16,8 @@
         <th scope="col">ID</th>
         <th scope="col">Nome</th>
         <th scope="col">Login</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Editar</th>
     </thead>
 
     <tbody>
@@ -23,6 +26,7 @@
             <td>{{student.nome}}</td>
             <td>{{student.login}}</td>
             <td><button (click)="deleteUsuario(student.id)" class="btn btn-primary">Delete</button></td>
+            <td><button [routerLink]="['/usuarioAdd', student.id]" routerLinkActive="router-link-active"  class="btn btn-warning">Editar</button></td>
         </tr>
     </tbody>
 </table>
