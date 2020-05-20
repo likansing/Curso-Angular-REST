@@ -6,7 +6,8 @@
             placeholder="Pesquisa por nome">
     </div>
     <button type="button" class="btn btn-primary mb-2" (click)="consultarUser()">Buscar</button>
-    <button type="button" [routerLink]="['/usuarioAdd']" routerLinkActive="router-link-active" style="margin-left: 5px;"  class="btn btn-success mb-2">Novo</button>
+    <button type="button" [routerLink]="['/usuarioAdd']" routerLinkActive="router-link-active" style="margin-left: 5px;"
+        class="btn btn-success mb-2">Novo</button>
 </form>
 
 <br />
@@ -21,12 +22,18 @@
     </thead>
 
     <tbody>
-        <tr *ngFor="let student of students">
+        <tr *ngFor="let student of students | paginate:{itemsPerPage:5, currentPage: p, totalItems: total}; let i = index">
             <td>{{student.id}}</td>
             <td>{{student.nome}}</td>
             <td>{{student.login}}</td>
-            <td><button (click)="deleteUsuario(student.id)" class="btn btn-primary">Delete</button></td>
-            <td><button [routerLink]="['/usuarioAdd', student.id]" routerLinkActive="router-link-active"  class="btn btn-warning">Editar</button></td>
+            <td><button (click)="deleteUsuario(student.id, i)" class="btn btn-primary">Delete</button></td>
+            <td><button [routerLink]="['/usuarioAdd', student.id]" routerLinkActive="router-link-active"
+                    class="btn btn-warning">Editar</button></td>
         </tr>
     </tbody>
 </table>
+
+<div class="text-center">
+    <pagination-controls (pageChange)="carregarPagina(p=$event);" previousLabel="voltar" nextLabel="Avancar" responsive="true">
+    </pagination-controls>
+</div>

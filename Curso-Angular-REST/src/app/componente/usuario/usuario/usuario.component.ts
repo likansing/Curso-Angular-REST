@@ -10,33 +10,35 @@ import { User } from 'src/app/model/user';
 })
 export class UsuarioComponent implements OnInit {
 
-  students: Observable<User[]>;
+  students: Array<User[]>;
   nome: String;
+  total: Number;
+
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit() {
     this.usuarioService.getStudentList().subscribe(data => {
-      this.students = data;
+      this.students = data.content;
+      this.total = data.totalElements;
     });
   }
 
-  deleteUsuario(id: Number) {
+  deleteUsuario(id: Number, index) {
 
     if (confirm('Deseja remover?')) {
       this.usuarioService.deletarUsuario(id).subscribe(data => {
-        console.log('Retorno do metodo delete' + data);
-        this.usuarioService.getStudentList().subscribe(data => {
-          this.students = data;
-        });
+        // console.log('Retorno do metodo delete' + data);
+
+        /* Para remover da tela */
+        this.students.splice(index, 1);
+
+        // this.usuarioService.getStudentList().subscribe(data => {
+        //   this.students = data;
+        // });
+
       });
     }
   }
-
-  // consultarUser() {
-  //   this.usuarioService.consultarUser(this.nome).subscribe(data => {
-  //     this.students = data;
-  //   });
-  // }
 
   consultarUser() {
     console.log(this.nome);
@@ -49,6 +51,15 @@ export class UsuarioComponent implements OnInit {
         this.students = data;
       });
     }
+  }
+
+  carregarPagina(pagina) {
+    // console.info('pagina= ' + pagina);
+    /* menos 1 pq a paginacao no back-end no banco comeca em zero */
+    this.usuarioService.getStudentListPage(pagina - 1).subscribe(data => {
+      this.students = data.content;
+      this.total = data.totalElements;
+    });
   }
 
 }

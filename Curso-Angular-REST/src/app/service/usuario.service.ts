@@ -36,6 +36,10 @@ export class UsuarioService {
     return this.http.put<any>(AppConstants.baseUrl, user);
   }
 
+  removerTelefone(id): Observable<any> {
+    return this.http.delete(AppConstants.baseUrl + "removerTelefone/" + id, { responseType: 'text' });
+  }
+
   userAutenticado() {
     if (localStorage.getItem('token') != null && localStorage.getItem('token').toString().trim() != null) {
       return true;
@@ -43,5 +47,10 @@ export class UsuarioService {
       return false;
     }
   }
+
+  getStudentListPage(pagina): Observable<any> {
+    return this.http.get<any>(AppConstants.baseUrl + 'page/' + pagina);
+  }
+
 
 }
