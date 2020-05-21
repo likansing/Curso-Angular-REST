@@ -13,8 +13,9 @@ export class UsuarioComponent implements OnInit {
   students: Array<User[]>;
   nome: String;
   total: Number;
+  p: Number;
 
-  constructor(private usuarioService: UsuarioService) { }
+  constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit() {
     this.usuarioService.getStudentList().subscribe(data => {
@@ -44,11 +45,15 @@ export class UsuarioComponent implements OnInit {
     console.log(this.nome);
     if (this.nome !== undefined && this.nome !== '') {
       this.usuarioService.consultarUser(this.nome).subscribe(data => {
-        this.students = data;
+        this.students = data.content;
+        this.total = data.totalElements;
+        this.p = 1;
       });
     } else {
       this.usuarioService.getStudentList().subscribe(data => {
-        this.students = data;
+        this.students = data.content;
+        this.total = data.totalElements;
+        this.p = 1;
       });
     }
   }
@@ -56,10 +61,19 @@ export class UsuarioComponent implements OnInit {
   carregarPagina(pagina) {
     // console.info('pagina= ' + pagina);
     /* menos 1 pq a paginacao no back-end no banco comeca em zero */
-    this.usuarioService.getStudentListPage(pagina - 1).subscribe(data => {
-      this.students = data.content;
-      this.total = data.totalElements;
-    });
-  }
 
+    if (this.nome !== '') {
+      this.usuarioService.consultarUserPorPage(this.nome, (pagina - 1)).subscribe(data => {
+        this.students = data.content;
+        this.total = data.totalElements;
+      });
+    }
+    else {
+      this.usuarioService.getStudentListPage(pagina - 1).subscribe(data => {
+        this.students = data.content;
+        this.total = data.totalElements;
+      });
+    }
+
+  }
 }
