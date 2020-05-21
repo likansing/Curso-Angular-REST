@@ -3,7 +3,8 @@
     <div class="form-row">
         <div class="form-group col-md-1">
             <label for="id">ID</label>
-            <input type="text" class="form-control" id="id" name="id" readonly="true" autocomplete="false" [(ngModel)]="usuario.id">
+            <input type="text" class="form-control" id="id" name="id" readonly="true" autocomplete="false"
+                [(ngModel)]="usuario.id">
         </div>
     </div>
 
@@ -11,7 +12,8 @@
         <div class="form-group col-md-12">
             <label for="nome">Nome</label>
             <span style="color: red; font-size: 14px;" *ngIf="nomeValidate.invalid"> *</span>
-            <input type="text" class="form-control" id="nome" required="true" name="nome" autocomplete="false" [(ngModel)]="usuario.nome" #nomeValidate="ngModel">
+            <input type="text" class="form-control" id="nome" required="true" name="nome" autocomplete="false"
+                [(ngModel)]="usuario.nome" #nomeValidate="ngModel">
         </div>
     </div>
 
@@ -19,15 +21,30 @@
         <div class="form-group col-md-6">
             <label for="login">Login</label>
             <span style="color: red; font-size: 14px;" *ngIf="loginValidate.invalid"> *</span>
-            <input type="text" class="form-control" id="login" required="true" name="login" autocomplete="false" [(ngModel)]="usuario.login" #loginValidate="ngModel">
+            <input type="text" class="form-control" id="login" required="true" name="login" autocomplete="false"
+                [(ngModel)]="usuario.login" #loginValidate="ngModel">
         </div>
         <div class="form-group col-md-6">
             <label for="senha">Senha</label>
             <span style="color: red; font-size: 14px;" *ngIf="senhaValidate.invalid"> *</span>
-            <input type="password" class="form-control" id="senha" required="true" name="senha" autocomplete="false" [(ngModel)]="usuario.senha" #senhaValidate="ngModel">
+            <input type="password" class="form-control" id="senha" required="true" name="senha" autocomplete="false"
+                [(ngModel)]="usuario.senha" #senhaValidate="ngModel">
         </div>
     </div>
-    
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="dataNascimento">Data Nascimento</label>
+            <span style="color: red; font-size: 14px;"> *</span>
+            <input type="text" class="form-control" id="dataNascimento" required="true" name="dataNascimento"
+            placeholder="dd/MM/yyyy" ngbDatepicker #dataNascimento="ngbDatepicker"
+            [(ngModel)]="usuario.dataNascimento" (click)="dataNascimento.toggle()">
+            <!-- <div class="input-group-append"> -->
+                <!-- <button class="btn btn-primary" (click)="dataNascimento.toggle()" type="button"></button> -->
+            <!-- </div>     -->
+        </div>
+    </div>
+
     <div class="card text-center">
         <div class="card-header">
             Telefone de Contato
@@ -49,19 +66,21 @@
     <table class="table">
         <tbody>
             <tr *ngFor="let fone of usuario.telefones; let i = index">
-            <td>{{fone.id}}</td>
-            <!-- <td>{{fone.numero | mask:'(00) 000000000'}}</td> -->
-            <td>{{fone.numero}}</td>
-            <td><button class="btn btn-danger" (click)="deletarTelefone(fone.id, i)">Delete</button></td>
+                <td>{{fone.id}}</td>
+                <!-- <td>{{fone.numero | mask:'(00) 000000000'}}</td> -->
+                <td>{{fone.numero}}</td>
+                <td><button class="btn btn-danger" (click)="deletarTelefone(fone.id, i)">Delete</button></td>
             </tr>
         </tbody>
     </table>
 
     <div class="form-row">
         <div class="form-group col-md-6">
-            <button type="button" class="btn btn-primary" [routerLink]="['/userList']" routerLinkActive="router-link-active" >Voltar</button>
+            <button type="button" class="btn btn-primary" [routerLink]="['/userList']"
+                routerLinkActive="router-link-active">Voltar</button>
             <button type="button" class="btn btn-primary" style="margin-left: 10px;" (click)="novo()">Novo</button>
-            <button type="button" class="btn btn-primary"  style="margin-left: 10px;" (click)="salvarUser()" [disabled]="formValidate.invalid">Salvar</button>
+            <button type="button" class="btn btn-primary" style="margin-left: 10px;" (click)="salvarUser()"
+                [disabled]="formValidate.invalid">Salvar</button>
         </div>
     </div>
 </form>

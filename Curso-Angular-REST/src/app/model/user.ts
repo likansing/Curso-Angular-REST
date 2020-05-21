@@ -6,7 +6,7 @@ export class User {
     login: String;
     nome: String;
     senha: String;
-
+    dataNascimento: String;
     telefones: Array<Telefone>;
 
 }
